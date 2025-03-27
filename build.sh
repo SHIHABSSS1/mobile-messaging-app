@@ -10,8 +10,9 @@ echo "=== Initial Directory Structure ==="
 find . -type f -name "*.tsx" | grep -v "node_modules"
 find . -type f -name "*.ts" | grep -v "node_modules"
 
-# Clean install dependencies
-npm ci
+# Use npm install instead of npm ci since there's no package-lock.json
+echo "=== Installing dependencies ==="
+npm install
 
 # Create a simple src directory structure if needed
 echo "=== Ensuring correct directory structure ==="

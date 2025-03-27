@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { db } from '../firebase/config';
 import { useAuth } from '../context/AuthContext';
-import { useChat, Message, ChatUser } from '../context/ChatContext';
+import { useChat } from '../context/ChatContext';
+import type { Message, ChatUser } from '../context/ChatContext';
 import { 
   collection, 
   query, 
