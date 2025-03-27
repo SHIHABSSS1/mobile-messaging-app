@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '../firebase/config';
 import { useAuth } from '../context/AuthContext';
-import { useChat } from '../context/ChatContext';
 import type { Message, ChatUser } from '../context/ChatContext';
 import { 
   collection, 
@@ -29,7 +28,7 @@ export function useChats() {
   const [error, setError] = useState<string | null>(null);
   
   const { currentUser } = useAuth();
-  const { data, dispatch } = useChat();
+  const { data, dispatch } = (window as any).__CHAT_CONTEXT__;
 
   // Get user chats
   useEffect(() => {

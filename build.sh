@@ -22,9 +22,10 @@ mkdir -p src
 if [ -d "src/src" ]; then
   echo "Found nested src directory, fixing structure..."
   cp -r src/src/* src/
+  rm -rf src/src
 fi
 
-# Copy root App.tsx and reportWebVitals.ts to src if they exist at root
+# Ensure App.tsx is in src directory
 if [ -f "App.tsx" ] && [ ! -f "src/App.tsx" ]; then
   echo "Copying App.tsx from root to src..."
   cp App.tsx src/
@@ -35,9 +36,17 @@ if [ -f "reportWebVitals.ts" ] && [ ! -f "src/reportWebVitals.ts" ]; then
   cp reportWebVitals.ts src/
 fi
 
+# Make sure no app code is referring to files outside src directory
+echo "=== Checking and fixing import paths ==="
+if [ -f "src/index.tsx" ]; then
+  # Update imports in index.tsx to use local paths
+  sed -i 's|from "../App"|from "./App"|g' src/index.tsx
+  sed -i 's|from "../reportWebVitals"|from "./reportWebVitals"|g' src/index.tsx
+fi
+
 # Debug directory structure
 echo "=== Debugging directory structure after fixes ==="
-node debug.js
+find src -type f | grep -v "node_modules"
 
 # Print key file contents
 echo "=== Key file contents ==="

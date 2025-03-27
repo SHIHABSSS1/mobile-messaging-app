@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, ReactNode } from 'react';
+import { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 
 export interface ChatUser {
@@ -94,6 +94,11 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const { currentUser } = useAuth();
   
   const [state, dispatch] = useReducer(chatReducer, initialState);
+  
+  // Expose context via global window property to break circular dependency
+  useEffect(() => {
+    (window as any).__CHAT_CONTEXT__ = { data: state, dispatch };
+  }, [state, dispatch]);
 
   return (
     <ChatContext.Provider value={{ data: state, dispatch }}>
