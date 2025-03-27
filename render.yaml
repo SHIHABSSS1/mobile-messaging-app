@@ -2,7 +2,7 @@ services:
   - type: web
     name: message-app
     env: static
-    buildCommand: ./build.sh
+    buildCommand: "chmod +x build.sh && ./build.sh"
     staticPublishPath: ./build
     envVars:
       - key: NODE_VERSION

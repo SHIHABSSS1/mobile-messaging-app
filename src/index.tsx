@@ -17,7 +17,20 @@ try {
   }
 }
 
-import reportWebVitals from './reportWebVitals';
+// Try different possible paths for reportWebVitals
+let reportWebVitals;
+try {
+  reportWebVitals = require('./reportWebVitals').default;
+} catch (e) {
+  console.warn("Could not load reportWebVitals from ./reportWebVitals, trying alternative paths...");
+  try {
+    reportWebVitals = require('../reportWebVitals').default;
+  } catch (e2) {
+    console.error("Failed to import reportWebVitals. Using empty function instead.");
+    // Fallback to empty function
+    reportWebVitals = () => {};
+  }
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
