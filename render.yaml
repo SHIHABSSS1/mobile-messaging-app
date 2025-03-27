@@ -2,9 +2,7 @@ services:
   - type: web
     name: message-app
     env: static
-    buildCommand: |
-      npm ci
-      npm run build
+    buildCommand: ./build.sh
     staticPublishPath: ./build
     envVars:
       - key: NODE_VERSION
